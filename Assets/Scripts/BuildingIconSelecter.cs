@@ -15,20 +15,41 @@ public class BuildingIconSelecter : MonoBehaviour
     float stratPoint = 0;
     float distance = 0;
 
-    private Button selectButton;
+    private Button selectTypeButton;
+    [SerializeField] private RectTransform selectionImage;
     [SerializeField] BuildingsTypeSo selectType;
+   
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        selectButton = GetComponent<Button>();
+        selectTypeButton = GetComponent<Button>();
         //iconOriginalSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
         distance = (iconOriginalSize.x + offset) * iconIndex;
     }
     private void Start()
     {
-        selectButton.onClick.AddListener(() => {
-            PLayerController.Instance.SetActiveBuildingType(selectType);
+        selectTypeButton.onClick.AddListener(() => {
+            if(PLayerController.Instance.activeBuildingType == selectType)
+            {
+                PLayerController.Instance.SetActiveBuildingType(null);
+                selectionImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                if(selectionImage.parent == expandButton.transform)
+                {
+                    selectionImage.gameObject.SetActive(false);
+                }
+                else
+                {
+                    selectionImage.gameObject.SetActive(true);
+                    selectionImage.SetParent(this.transform);
+                    selectionImage.transform.SetSiblingIndex(0);
+                    selectionImage.transform.localPosition = new Vector3(0, 0, 0);
+                }
+                PLayerController.Instance.SetActiveBuildingType(selectType);
+            }            
         });
     }
 
@@ -44,6 +65,7 @@ public class BuildingIconSelecter : MonoBehaviour
 
     IEnumerator Deployment()
     {
+        selectTypeButton.interactable = false;
         Vector3 tmp = Vector3.zero;
         float timer = 0;
         yield return new WaitForFixedUpdate();
@@ -70,12 +92,14 @@ public class BuildingIconSelecter : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+        selectTypeButton.interactable = true;
         expandButton.RepairButton();
         yield return null;
     }
 
     IEnumerator Ñollapse()
     {
+        selectTypeButton.interactable = false;
         float timer = 1;
         yield return new WaitForFixedUpdate();
         if (isHorizontal)
@@ -103,6 +127,7 @@ public class BuildingIconSelecter : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+        selectTypeButton.interactable = true;
         expandButton.RepairButton();
         yield return null;
     }

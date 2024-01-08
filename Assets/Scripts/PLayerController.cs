@@ -9,7 +9,7 @@ public class PLayerController : MonoBehaviour
 
     private Vector3 mousePosition;
     private Camera mainCamera;
-    [SerializeField] private BuildingsTypeSo activeBuildingType;
+    public BuildingsTypeSo activeBuildingType { get; private set; }
 
     private void Awake()
     {
@@ -44,7 +44,10 @@ public class PLayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
+            if(activeBuildingType != null)
+            {
+                Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
+            }
         }
     }
 

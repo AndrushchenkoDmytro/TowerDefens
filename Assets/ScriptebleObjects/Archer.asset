@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   nameString: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1282989143244712727, guid: 14870813abf1e354f9678adede50dfa8, type: 3}
