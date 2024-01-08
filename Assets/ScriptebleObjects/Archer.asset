@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2641d7ef6af3c94c8e806df055b89eb, type: 3}
-  m_Name: WoodHarvester
+  m_Name: Archer
   m_EditorClassIdentifier: 
-  nameString: W
-  prefab: {fileID: 4107679504086320461, guid: 4cef39ff09494bb41ac2120291407ccb, type: 3}
+  nameString: 
+  prefab: {fileID: 0}

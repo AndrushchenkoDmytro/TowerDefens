@@ -15,13 +15,21 @@ public class BuildingIconSelecter : MonoBehaviour
     float stratPoint = 0;
     float distance = 0;
 
-    [SerializeField] Image Image;
+    private Button selectButton;
+    [SerializeField] BuildingsTypeSo selectType;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        selectButton = GetComponent<Button>();
         //iconOriginalSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
         distance = (iconOriginalSize.x + offset) * iconIndex;
+    }
+    private void Start()
+    {
+        selectButton.onClick.AddListener(() => {
+            PLayerController.Instance.SetActiveBuildingType(selectType);
+        });
     }
 
     public void IconDeployment()

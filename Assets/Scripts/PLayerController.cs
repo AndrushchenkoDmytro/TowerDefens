@@ -5,10 +5,23 @@ using UnityEngine.EventSystems;
 
 public class PLayerController : MonoBehaviour
 {
+    public static PLayerController Instance;
+
     private Vector3 mousePosition;
     private Camera mainCamera;
-    [SerializeField] private BuildingsTypeSo activeBuilding;
+    [SerializeField] private BuildingsTypeSo activeBuildingType;
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         mainCamera = Camera.main;
@@ -18,10 +31,7 @@ public class PLayerController : MonoBehaviour
     void Update()
     {
         UpdateMousePosition();
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            Instantiate(activeBuilding.prefab,mousePosition,Quaternion.identity);
-        }
+        SpawnBuilding();
     }
 
     private void UpdateMousePosition()
@@ -29,4 +39,18 @@ public class PLayerController : MonoBehaviour
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
     }
+
+    private void SpawnBuilding()
+    {
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
+        }
+    }
+
+    public void SetActiveBuildingType(BuildingsTypeSo buildingsTypeSo)
+    {
+        activeBuildingType = buildingsTypeSo;
+    }
+
 }
