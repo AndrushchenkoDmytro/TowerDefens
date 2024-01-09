@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameString: S
   prefab: {fileID: 4641436953836434757, guid: 817aef35b8fafb44fa0f908b89acd7b9, type: 3}
+  buildingSprite: {fileID: 21300000, guid: 2263e91ebcd2a254dab5f4caccb4a7af, type: 3}

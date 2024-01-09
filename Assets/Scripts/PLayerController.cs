@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,16 @@ public class PLayerController : MonoBehaviour
 {
     public static PLayerController Instance;
 
-    private Vector3 mousePosition;
+    public Vector3 mousePosition { get; private set; }
     private Camera mainCamera;
     public BuildingsTypeSo activeBuildingType { get; private set; }
+
+    public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
+
+    public class OnActiveBuildingChangedArgs : EventArgs
+    {
+        public BuildingsTypeSo activeBuilding;
+    }
 
     private void Awake()
     {
@@ -30,19 +38,23 @@ public class PLayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateMousePosition();
-        SpawnBuilding();
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            UpdateMousePosition();
+            SpawnBuilding();
+        }
     }
 
     private void UpdateMousePosition()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        worldPos.z = 0;
+        mousePosition = worldPos;
     }
 
     private void SpawnBuilding()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0))
         {
             if(activeBuildingType != null)
             {
@@ -54,6 +66,7 @@ public class PLayerController : MonoBehaviour
     public void SetActiveBuildingType(BuildingsTypeSo buildingsTypeSo)
     {
         activeBuildingType = buildingsTypeSo;
+        OnActiveBuildingChanged?.Invoke(this,new OnActiveBuildingChangedArgs { activeBuilding = activeBuildingType});
     }
 
 }
