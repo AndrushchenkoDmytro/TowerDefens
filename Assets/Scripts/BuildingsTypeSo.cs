@@ -7,5 +7,6 @@ public class BuildingsTypeSo : ScriptableObject
 {
     public string nameString;
     public Transform prefab;
+    public Sprite buildingSprite;
 
 }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2641d7ef6af3c94c8e806df055b89eb, type: 3}
-  m_Name: WoodHarvester
+  m_Name: StoneHarvester
   m_EditorClassIdentifier: 
-  nameString: W
-  prefab: {fileID: 4107679504086320461, guid: 4cef39ff09494bb41ac2120291407ccb, type: 3}
-  buildingSprite: {fileID: 21300000, guid: 793ca27a5a3378149aaa12abe85933f4, type: 3}
+  nameString: S
+  prefab: {fileID: 4641436953836434757, guid: 817aef35b8fafb44fa0f908b89acd7b9, type: 3}
+  buildingSprite: {fileID: 21300000, guid: 2263e91ebcd2a254dab5f4caccb4a7af, type: 3}
