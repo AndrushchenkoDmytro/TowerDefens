@@ -11,6 +11,7 @@ public class PLayerController : MonoBehaviour
     public Vector3 mousePosition { get; private set; }
     private Camera mainCamera;
     public BuildingsTypeSo activeBuildingType { get; private set; }
+    [SerializeField] private LayerMask buildingLayer;
 
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
@@ -42,6 +43,7 @@ public class PLayerController : MonoBehaviour
         {
             UpdateMousePosition();
             SpawnBuilding();
+
         }
     }
 
@@ -56,7 +58,7 @@ public class PLayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(activeBuildingType != null)
+            if(activeBuildingType != null && CanSpawnBuilding() == true)
             {
                 Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
             }
@@ -67,6 +69,23 @@ public class PLayerController : MonoBehaviour
     {
         activeBuildingType = buildingsTypeSo;
         OnActiveBuildingChanged?.Invoke(this,new OnActiveBuildingChangedArgs { activeBuilding = activeBuildingType});
+    }
+
+    private bool CanSpawnBuilding()
+    {
+        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0);
+        if (boxOverlap2D != null) return false;
+
+        Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);
+        foreach (BoxCollider2D  building in boxOverlapArray)
+        {
+            Debug.Log(building.gameObject);
+            if(building.GetComponent<BuildingTypeHolder>().GetHolderBuilding().name == activeBuildingType.name)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

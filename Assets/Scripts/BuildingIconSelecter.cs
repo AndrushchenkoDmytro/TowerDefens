@@ -131,5 +131,4 @@ public class BuildingIconSelecter : MonoBehaviour
         expandButton.RepairButton();
         yield return null;
     }
-
 }
