@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
     private void CameraZoom()
     {
         targetCameraSize -= Input.mouseScrollDelta.y;
-        targetCameraSize = Mathf.Clamp(targetCameraSize, 10, 20);
+        targetCameraSize = Mathf.Clamp(targetCameraSize, 8, 20);
         currentCameraSize = Mathf.Lerp(currentCameraSize, targetCameraSize, Time.deltaTime * zoomSpeed);
         virtualCamera.m_Lens.OrthographicSize = currentCameraSize;
     }
