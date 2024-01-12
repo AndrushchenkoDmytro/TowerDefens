@@ -10,6 +10,9 @@ public class ResourcesUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldAmountText;
     void Start()
     {
+        woodAmountText.text = ResourceManager.Instance.GetResource(Resource.Wood).ToString();
+        stoneAmountText.text = ResourceManager.Instance.GetResource(Resource.Stone).ToString();
+        goldAmountText.text = ResourceManager.Instance.GetResource(Resource.Gold).ToString();
         ResourceManager.Instance.OnResourcesAmountChanged += UpdateResourcesUI;
     }
 

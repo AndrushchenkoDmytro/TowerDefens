@@ -73,7 +73,8 @@ public class PLayerController : MonoBehaviour
 
     private bool CanSpawnBuilding()
     {
-        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0);
+        BoxCollider2D activeBuildingCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
+        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0);
         if (boxOverlap2D != null) return false;
 
         Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);

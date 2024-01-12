@@ -12,7 +12,7 @@ public class ResourceGenerator : MonoBehaviour
     [SerializeField] private float detectRadius = 8f;
     private float currentTime = 0;
     [SerializeField] private float resourceNodesAmount = 0;
-    private float requiredAmountNodes = 15;
+    [SerializeField] private float requiredAmountNodes = 15;
     [SerializeField] LayerMask resourcesLayer;
 
     private void Start()
@@ -48,6 +48,7 @@ public class ResourceGenerator : MonoBehaviour
         Collider2D[] resourceNodes =  Physics2D.OverlapCircleAll(transform.position, detectRadius, resourcesLayer);
         foreach(Collider2D node in resourceNodes)
         {
+            Debug.Log(node.tag+"1");
             if (node.gameObject.tag == resourceType.ToString())
                 resourceNodesAmount++;
         }
