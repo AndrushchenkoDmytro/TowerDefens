@@ -26,11 +26,11 @@ public class ProductionPerformanceOverlay : MonoBehaviour
 
     private void ChangeResourceLogo()
     {
-        if(resourceGenerator.GetResourceType() == Resource.Wood)
+        if(resourceGenerator.GetResourceType() == ResourceTypes.Wood)
         {
             resourceLogo.sprite = logoSprites[0];
         }
-        else if (resourceGenerator.GetResourceType() == Resource.Stone)
+        else if (resourceGenerator.GetResourceType() == ResourceTypes.Stone)
         {
             resourceLogo.sprite = logoSprites[1];
         }

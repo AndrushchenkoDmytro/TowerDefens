@@ -60,6 +60,7 @@ public class PLayerController : MonoBehaviour
         {
             if(activeBuildingType != null && CanSpawnBuilding() == true)
             {
+                if(ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
                 Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
             }
         }

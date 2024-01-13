@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class ResourceManager : MonoBehaviour
         public int AmountChanged { get; set; }
     }*/
 
-    private Dictionary<Resource, int> resources = new Dictionary<Resource, int>();
+    private Dictionary<ResourceTypes, int> resources = new Dictionary<ResourceTypes, int>();
 
     public event EventHandler OnResourcesAmountChanged;
 
@@ -33,26 +34,42 @@ public class ResourceManager : MonoBehaviour
 
     private void InitializeResources()
     {
-        resources.Add(Resource.Wood, 0);
-        resources.Add(Resource.Stone, 0);
-        resources.Add(Resource.Gold, 0);
+        resources.Add(ResourceTypes.Wood, 60);
+        resources.Add(ResourceTypes.Stone, 0);
+        resources.Add(ResourceTypes.Gold, 0);
     }
 
-    public void AddResource(Resource type, int value)
+    public void AddResource(ResourceTypes type, int value)
     {
         resources[type] += value;
         OnResourcesAmountChanged?.Invoke(this,EventArgs.Empty); //new ResourceChangedEventArgs { ResourceType = type, AmountChanged = value }
     }
 
-    public int GetResource(Resource type)
+    public int GetResource(ResourceTypes type)
     {
         return resources[type];
+    }
+
+    public bool CanAfford(PriceList pricelist)
+    {
+        if (resources[ResourceTypes.Wood] < pricelist.wood) return false;
+        if (resources[ResourceTypes.Stone] < pricelist.stone) return false;
+        if (resources[ResourceTypes.Gold] < pricelist.gold) return false;
+        MakePurchase(pricelist);
+        return true;
+    }
+
+    private void MakePurchase(PriceList pricelist)
+    {
+        resources[ResourceTypes.Wood] -= pricelist.wood;
+        resources[ResourceTypes.Stone] -= pricelist.stone;
+        resources[ResourceTypes.Gold] -= pricelist.gold;
     }
 
 }
 
 
-public enum Resource
+public enum ResourceTypes
 {
     Wood,
     Stone,

@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class ResourceGenerator : MonoBehaviour
 {
-    [SerializeField] private Resource resourceType;
+    [SerializeField] private ResourceTypes resourceType;
     [SerializeField] private float detectRadius = 8f;
     private int resourcesPerTimeInterval = 1;
     [SerializeField] private float generationTime = 0;
@@ -93,7 +93,7 @@ public class ResourceGenerator : MonoBehaviour
         return Mathf.RoundToInt(resourceNodesAmount / requiredAmountNodes * 100);
     }
 
-    public Resource GetResourceType()
+    public ResourceTypes GetResourceType()
     {
         return resourceType;
     }
