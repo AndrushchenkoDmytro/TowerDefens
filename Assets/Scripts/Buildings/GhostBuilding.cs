@@ -5,10 +5,12 @@ using UnityEngine;
 public class GhostBuilding : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer ghostSprite;
-
+    private BuildingsTypeSo activeBuilding;
+    private ProductionPerformanceOverlay performanceOverlay;
     void Awake()
     {
         ghostSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        performanceOverlay = GetComponent<ProductionPerformanceOverlay>();
     }
 
     private void Start()
@@ -21,7 +23,7 @@ public class GhostBuilding : MonoBehaviour
             }
             else
             {
-                Show(e.activeBuilding.buildingSprite);
+                Show(e.activeBuilding);
             }
         });
     }
@@ -29,12 +31,23 @@ public class GhostBuilding : MonoBehaviour
     private void Update()
     {
         transform.position = PLayerController.Instance.mousePosition;
+
     }
 
-    public void Show(Sprite buildingSprite)
+    public void Show(BuildingsTypeSo building)
     {
         gameObject.SetActive(true);
-        ghostSprite.sprite = buildingSprite;
+        activeBuilding = building;
+        if(activeBuilding.buildingClass == BuildingClass.Production)
+        {
+            performanceOverlay.enabled = true;
+            performanceOverlay.ShowPerformanceOverlay(activeBuilding);
+        }
+        else
+        {
+            performanceOverlay.HidePerformanceOverlay();
+        }
+        ghostSprite.sprite = activeBuilding.buildingSprite;
     }
 
     public void Hide()
