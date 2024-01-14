@@ -76,7 +76,11 @@ public class PLayerController : MonoBehaviour
     {
         BoxCollider2D activeBuildingCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
         Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0);
-        if (boxOverlap2D != null) return false;
+        if (boxOverlap2D != null) 
+        { 
+            ToolTips.Instance.ShowNotEnoughSpaceTip(); 
+            return false;
+        };
 
         Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);
         foreach (BoxCollider2D  building in boxOverlapArray)
@@ -84,6 +88,7 @@ public class PLayerController : MonoBehaviour
             Debug.Log(building.gameObject);
             if(building.GetComponent<BuildingTypeHolder>().GetHolderBuilding().name == activeBuildingType.name)
             {
+                ToolTips.Instance.ShowVeryCloseToBuildingOfSameTypeTip();
                 return false;
             }
         }

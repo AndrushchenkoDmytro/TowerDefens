@@ -52,9 +52,9 @@ public class ResourceManager : MonoBehaviour
 
     public bool CanAfford(PriceList pricelist)
     {
-        if (resources[ResourceTypes.Wood] < pricelist.wood) return false;
-        if (resources[ResourceTypes.Stone] < pricelist.stone) return false;
-        if (resources[ResourceTypes.Gold] < pricelist.gold) return false;
+        if (resources[ResourceTypes.Wood] < pricelist.wood) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
+        if (resources[ResourceTypes.Stone] < pricelist.stone) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
+        if (resources[ResourceTypes.Gold] < pricelist.gold) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
         MakePurchase(pricelist);
         return true;
     }

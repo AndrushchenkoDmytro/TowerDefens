@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5191442329625139611, guid: 5b8b424b62a151c4f9620c86dacc2b1f, type: 3}
   buildingClass: 1
+  constructPriceList:
+    wood: 100
+    stone: 0
+    gold: 0
   buildingSprite: {fileID: 21300000, guid: 2263e91ebcd2a254dab5f4caccb4a7af, type: 3}
   blockConstracionRadius: 7
