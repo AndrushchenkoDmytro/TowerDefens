@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2641d7ef6af3c94c8e806df055b89eb, type: 3}
   m_Name: MainTower
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1282989143244712727, guid: ee03c58e2c467d841876f2342bb270ef, type: 3}
+  prefab: {fileID: 609909751227243689, guid: c02dba420892767418590cdcad8e7341, type: 3}
   buildingClass: 0
+  constructPriceList:
+    wood: 0
+    stone: 0
+    gold: 0
   buildingSprite: {fileID: 21300000, guid: 7030b8e3eb49e8440ae8eb3ec8b45d05, type: 3}
   blockConstracionRadius: 6
