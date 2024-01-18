@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8606530251730053324}
   - component: {fileID: 3073072411602371064}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Wood_RN1
   m_TagString: Wood
   m_Icon: {fileID: 0}

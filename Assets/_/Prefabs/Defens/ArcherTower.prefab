@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1282989143244712727}
   - component: {fileID: 8008371387973154020}
-  m_Layer: 0
+  - component: {fileID: 8422395236718813287}
+  m_Layer: 6
   m_Name: ArcherTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +79,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.8360422, y: 5.6713886}
   m_EdgeRadius: 0
+--- !u!114 &8422395236718813287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4824379763385973407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76b491404f99c749a8606eeb7e9fba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthAmountMax: 100
+  canBeRecover: 1
+  time: 0
 --- !u!1 &6555637355069404274
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,8 +164,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1874178649
-  m_SortingLayer: 3
+  m_SortingLayerID: -909903199
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3a549cd61f4d79e4b996c9978dac641f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class PLayerController : MonoBehaviour
 {
     public static PLayerController Instance;
-
     public Vector3 mousePosition { get; private set; }
     private Camera mainCamera;
     public BuildingsTypeSo activeBuildingType { get; private set; }
@@ -15,6 +14,11 @@ public class PLayerController : MonoBehaviour
 
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
+    [SerializeField] private Transform mainTower;
+    public Transform MainTower()
+    {
+        return mainTower;
+    }
     public class OnActiveBuildingChangedArgs : EventArgs
     {
         public BuildingsTypeSo activeBuilding;
