@@ -94,8 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4650694212257173583}
   - component: {fileID: 1948285937402891221}
-  - component: {fileID: 5186620061413747823}
-  m_Layer: 0
+  - component: {fileID: -8536363448682945733}
+  - component: {fileID: 4061997481043462911}
+  m_Layer: 3
   m_Name: ArrowProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +164,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2885475, y: 0.16034903}
   m_EdgeRadius: 0
---- !u!50 &5186620061413747823
+--- !u!50 &-8536363448682945733
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -190,3 +191,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4061997481043462911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4321222406742190971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4e845f438c95348913aa9110d2ecb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2
+  projectileLayer:
+    serializedVersion: 2
+    m_Bits: 8

@@ -7,11 +7,12 @@ TagManager:
   - Wood
   - Stone
   - Gold
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Projectiles
   - Water
   - UI
   - Buildings

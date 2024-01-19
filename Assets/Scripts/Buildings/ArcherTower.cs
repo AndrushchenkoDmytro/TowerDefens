@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ArcherTower : MonoBehaviour
 {
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform target;
     private Transform tempTarget;
-    private float time = 0.7f;
+    private float rechargeTime = 0.4f;
+    [SerializeField][Range(0.3f,0.8f)] private float rechargeInterval = 0.4f;
+    private float timeToFindTarget = 0.5f;
     private float findTargeTimetInterval = 0.5f;
     private float distanceToTarget;
-    private float atackRadius = 16;
+    [SerializeField] private float atackRadius = 16;
     [SerializeField] private LayerMask enemyLayer;
 
     private bool isEnemyNearby = false;
@@ -20,21 +23,37 @@ public class ArcherTower : MonoBehaviour
         {
             if(target == null)
             {
-                time = 0;
+                timeToFindTarget = 0;
                 FindTarget();
             }
             RefreshTarget();
+            Shoot();
         }
     }
-    private void RefreshTarget()
+
+    private void Shoot()
     {
-        if (time < findTargeTimetInterval)
+        if (rechargeTime < rechargeInterval)
         {
-            time += Time.deltaTime;
+            rechargeTime += Time.deltaTime;
         }
         else
         {
-            time = 0;
+            rechargeTime = 0;
+            GameObject projectile = Instantiate(projectilePrefab,transform.position,Quaternion.identity);
+            projectile.GetComponent<ArrowProjectile>().SetTarget(target);
+        }
+    }
+
+    private void RefreshTarget()
+    {
+        if (timeToFindTarget < findTargeTimetInterval)
+        {
+            timeToFindTarget += Time.deltaTime;
+        }
+        else
+        {
+            timeToFindTarget = 0;
             FindTarget();
         }
     }
