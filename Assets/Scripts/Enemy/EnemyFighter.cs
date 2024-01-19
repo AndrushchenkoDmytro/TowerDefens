@@ -5,18 +5,18 @@ using UnityEngine;
 public class EnemyFighter : MonoBehaviour, IEnemy
 {
     private Transform mainTower;
-    [SerializeField] private Transform target; 
-    private Rigidbody2D rb;
+    private Transform tempTarget;
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 moveDirection = Vector3.zero;
     private float moveSpeed = 6;
     private float searchRadius = 12f;
     [SerializeField] private LayerMask buildingLayer;
 
-    [SerializeField] private Vector3 moveDirection = Vector3.zero;
     private float distanceToTarget = 0;
     private float time = 0.7f;
     private float findTargeTimetInterval = 0.8f;
-    private Transform tempTarget;
 
+    private Rigidbody2D rb;
     void Awake()
     {
         moveSpeed = Random.Range(5.5f, 6.5f);
@@ -107,12 +107,14 @@ public class EnemyFighter : MonoBehaviour, IEnemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("EnemyFighter");
+        Debug.Log(collision.gameObject);
+        Debug.Log(collision.gameObject.layer);
+        Debug.Log(gameObject.name + collision.gameObject.layer == buildingLayer.ToString());
         if (collision.gameObject.layer == 6)
         {
             collision.gameObject.GetComponent<HealthSystem>().GetDamage(10);
             Destroy(gameObject);
-
         }
     }
-
 }
