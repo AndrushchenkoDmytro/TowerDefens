@@ -11,7 +11,7 @@ public class PLayerController : MonoBehaviour
     private Camera mainCamera;
     public BuildingsTypeSo activeBuildingType { get; private set; }
     [SerializeField] private LayerMask buildingLayer;
-
+    private int layerBitMask = 1 << 6 | 1 << 7;
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
     [SerializeField] private Transform mainTower;
@@ -47,7 +47,6 @@ public class PLayerController : MonoBehaviour
         {
             UpdateMousePosition();
             SpawnBuilding();
-
         }
     }
 
@@ -79,17 +78,17 @@ public class PLayerController : MonoBehaviour
     private bool CanSpawnBuilding()
     {
         BoxCollider2D activeBuildingCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
-        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0);
-        if (boxOverlap2D != null) 
-        { 
+        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0,layerBitMask);
+        if (boxOverlap2D != null)
+        {
             ToolTips.Instance.ShowNotEnoughSpaceTip(); 
             return false;
         };
 
         Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);
-        foreach (BoxCollider2D  building in boxOverlapArray)
+        
+        foreach (Collider2D building in boxOverlapArray)
         {
-            Debug.Log(building.gameObject);
             if(building.GetComponent<BuildingTypeHolder>().GetHolderBuilding().name == activeBuildingType.name)
             {
                 ToolTips.Instance.ShowVeryCloseToBuildingOfSameTypeTip();

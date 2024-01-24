@@ -9,19 +9,24 @@ public class ArcherTower : MonoBehaviour
     private Transform tempTarget;
     private float rechargeTime = 0.4f;
     [SerializeField][Range(0.3f,0.8f)] private float rechargeInterval = 0.4f;
-    private float timeToFindTarget = 0.5f;
-    private float findTargeTimetInterval = 0.5f;
+    private float timeToFindTarget = 0.4f;
+    private float findTargeTimetInterval = 0.4f;
     private float distanceToTarget;
     [SerializeField] private float atackRadius = 16;
     [SerializeField] private LayerMask enemyLayer;
 
     private bool isEnemyNearby = false;
 
+    private void Start()
+    {
+        rechargeTime = rechargeInterval;
+    }
+
     private void Update()
     {
         if (isEnemyNearby)
         {
-            if(target == null)
+            if(target != null && target.gameObject.activeInHierarchy == false)
             {
                 timeToFindTarget = 0;
                 FindTarget();
@@ -60,7 +65,7 @@ public class ArcherTower : MonoBehaviour
     private void FindTarget()
     {
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, atackRadius, enemyLayer);
-        if (target != null)
+        if (target != null && target.gameObject.activeInHierarchy)
         {
             distanceToTarget = Vector3.Distance(transform.position, target.position);
         }
@@ -93,6 +98,7 @@ public class ArcherTower : MonoBehaviour
         {
             if (isEnemyNearby == false)
             {
+                timeToFindTarget = findTargeTimetInterval;
                 isEnemyNearby = true;
             }
         }

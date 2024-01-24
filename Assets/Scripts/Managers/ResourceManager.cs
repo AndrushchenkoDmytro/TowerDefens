@@ -64,6 +64,7 @@ public class ResourceManager : MonoBehaviour
         resources[ResourceTypes.Wood] -= pricelist.wood;
         resources[ResourceTypes.Stone] -= pricelist.stone;
         resources[ResourceTypes.Gold] -= pricelist.gold;
+        OnResourcesAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 
 }

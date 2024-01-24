@@ -6,14 +6,16 @@ using UnityEngine.U2D;
 public class ArrowProjectile : MonoBehaviour
 {
     private Transform sprite;
-    private Transform target;
-    private Vector3 moveDirection;
-    private float moveSpeed = 8;
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 moveDirection;
+    private float moveSpeed = 9;
     private float time = 0;
     [SerializeField] private float lifeTime = 2;
-    private float rotateTime = 0f;
+    private float rotateTime = 0.1f;
     private float rotateInterval = 0.1f;
     [SerializeField] private LayerMask projectileLayer;
+
+    private bool isTargetActive = true;
     private void Start()
     {
         sprite = transform.GetChild(0).transform;
@@ -22,15 +24,22 @@ public class ArrowProjectile : MonoBehaviour
     private void Update()
     {
         MoveToTarget();
-        RefreshRotation();
         CheckLifeTime();
     }
 
     private void MoveToTarget()
     {
-        if (target != null)
+        if (target != null && isTargetActive)
         {
-            moveDirection = (target.position - transform.position).normalized;
+            if(target.gameObject.activeInHierarchy == false)
+            {
+                isTargetActive = false;
+            }
+            else
+            {
+                moveDirection = (target.position - transform.position).normalized;
+                RefreshRotation();
+            }
         }
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
@@ -73,7 +82,6 @@ public class ArrowProjectile : MonoBehaviour
     {
         if (collision.gameObject.layer == projectileLayer)
         {
-            Destroy(collision.gameObject);
             Destroy(gameObject);
         }
     }
