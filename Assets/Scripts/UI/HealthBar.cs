@@ -26,6 +26,7 @@ public class HealthBar : MonoBehaviour
     {
         healthSystem.OnHealthChangedEvent += ChangeHealthInBar;
         healthSystem.OnDiedEvent += (objcet,e) => { healthSystem.OnHealthChangedEvent -= ChangeHealthInBar; };
+        healthSystem.OnResetToDefoult += ResetBarToDefoult;
         HideHealthBar();
         currentHealth = healthBarProgress.localScale.x;
     }
@@ -114,6 +115,14 @@ public class HealthBar : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+    }
+    private void ResetBarToDefoult(object sender, System.EventArgs e)
+    {
+        targetHealth = 1;
+        healthBarProgress.localScale = new Vector3(1, 1, 1);
+        healthBarFG.localScale = new Vector3(1, 1, 1);
+        healthBarProgressSprite.color = reduceHealthProgressColor;
+        HideHealthBar();
     }
 
     private void ShowHealthBar()

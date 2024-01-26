@@ -13,6 +13,7 @@ public class EnemyWavesManager : MonoBehaviour
     }
     private State currentState = State.SwitchState;
 
+    
     [SerializeField] private Transform spawnZone;
     [SerializeField] private List<Transform> spawnPositions;
     private Vector3 randomOffset = Vector3.zero;
@@ -37,10 +38,10 @@ public class EnemyWavesManager : MonoBehaviour
     private void Awake()
     {
         nextWaveTimer = timeBetweenWaves;
+        GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () => { gameObject.SetActive(false); };
     }
     private void Start()
     {
-        GenerateWavePosition();
         nextWaveTimer = timeBetweenWaves;
     }
 
@@ -111,4 +112,8 @@ public class EnemyWavesManager : MonoBehaviour
         spawnZone.position = spawnPositions[posIndex].position;
     }
 
+    public Vector3 GetWaveSpawnPosition()
+    {
+        return spawnZone.position;
+    }
 }

@@ -28,7 +28,7 @@ public class ObjectPool<T> where T : Component, IPoolable
         {
             t = SpawnNewObject();
         }
-        t.OnDestroy += ReturnObjectToPool;
+        t.OnPolableDestroy += ReturnObjectToPool;
         t.gameObject.SetActive(true);
         t.transform.position = position;
         return t;
@@ -37,7 +37,7 @@ public class ObjectPool<T> where T : Component, IPoolable
     private void ReturnObjectToPool(IPoolable poolable)
     {
         freeObjects.Add(poolable as T);
-        poolable.OnDestroy -= ReturnObjectToPool;
+        poolable.OnPolableDestroy -= ReturnObjectToPool;
         poolable.Reset();
     }
 

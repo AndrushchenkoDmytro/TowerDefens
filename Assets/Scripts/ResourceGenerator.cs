@@ -20,6 +20,7 @@ public class ResourceGenerator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        gameObject.layer = 6;
     }
 
     private void Start()

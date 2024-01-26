@@ -57,7 +57,7 @@ public class ArrowProjectile : MonoBehaviour
         else
         {
             rotateTime = 0;
-            sprite.eulerAngles = new Vector3(0,0,GetAngleFromVector(moveDirection));
+            sprite.eulerAngles = new Vector3(0,0,UtilsClass.GetAngleFromVector(moveDirection));
         }
     }
 
@@ -71,11 +71,6 @@ public class ArrowProjectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private float GetAngleFromVector(Vector3 vector)
-    {
-        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

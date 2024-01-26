@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ResourcesDestroyerEnemy : MonoBehaviour, IPoolable
 {
-    public event Action<IPoolable> OnDestroy;
+    public event Action<IPoolable> OnPolableDestroy;
 
     public void Reset()
     {

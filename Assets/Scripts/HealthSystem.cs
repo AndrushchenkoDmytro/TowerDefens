@@ -10,7 +10,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private int healthAmountMax = 100;
 
     public event EventHandler<OnHealthChangedEventHandler> OnHealthChangedEvent;
+    public event EventHandler OnResetToDefoult;
     public event EventHandler OnDiedEvent;
+
     public class OnHealthChangedEventHandler : EventArgs
     {
         public float deltaNormilizeValue;
@@ -77,6 +79,13 @@ public class HealthSystem : MonoBehaviour
         }
         canBeRecover = true;
         yield break;
+    }
+
+    public void ResetToDefault()
+    {
+        healthAmount = healthAmountMax;
+        time = recoverTime;
+        OnResetToDefoult?.Invoke(this, EventArgs.Empty);
     }
 
     public bool IsDead()

@@ -7,19 +7,21 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     private Transform mainTower;
     private Transform tempTarget;
     [SerializeField] private Transform target;
+    private Vector3 targetLastPos;
     [SerializeField] private Vector3 moveDirection = Vector3.zero;
     private float moveSpeed = 6;
     private float searchRadius = 12f;
+    [SerializeField] private LayerMask buildingLayerMask;
     [SerializeField] private int buildingLayer;
     [SerializeField] private int projectileLayer;
 
     private float distanceToTarget = 0;
-    private float time = 0.7f;
-    private float findTargeTimetInterval = 0.8f;
+    [SerializeField] private float time = 0.5f;
+    private float refreshTargeInterval = 0.65f;
 
     private Rigidbody2D rb;
 
-    public event System.Action<IPoolable> OnDestroy;
+    public event System.Action<IPoolable> OnPolableDestroy;
 
     void Awake()
     {
@@ -54,7 +56,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
 
     private void RefreshTarget()
     {
-        if(time < findTargeTimetInterval)
+        if(time < refreshTargeInterval)
         {
             time += Time.deltaTime;
         }
@@ -66,8 +68,9 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     }
 
     private void FindTarget()
-    {        
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, searchRadius, buildingLayer);
+    {
+        Debug.Log("buildingLayer = "+buildingLayer);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, searchRadius, buildingLayerMask);
         if(target != null)
         {
             distanceToTarget = Vector3.Distance(transform.position, target.position);
@@ -78,22 +81,25 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
         }
         float tempDistance = 0;
         tempTarget = null;
-        foreach (Collider2D target in targets)
+        foreach (Collider2D targetCollider in targets)
         {
-            tempDistance = Vector3.Distance(transform.position,target.transform.position);
+            Debug.Log(targetCollider.transform.gameObject.name + " = " + targetCollider.transform.gameObject.layer);
+            tempDistance = Vector3.Distance(transform.position,targetCollider.transform.position);
             if(tempDistance <= distanceToTarget)
             {
-                tempTarget = target.transform;
+                tempTarget = targetCollider.transform;
                 distanceToTarget = tempDistance;
             }
         }
         if (tempTarget != null)
         {
             target = tempTarget;
+            targetLastPos = target.position;
         }
         else
         {
             target = mainTower;
+            if(target != null) { targetLastPos = target.position; }
         }
         if (target == null)
         {
@@ -104,7 +110,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     }
     private void CalculateMoveDirection()
     {
-        moveDirection = (target.position - transform.position).normalized;
+        moveDirection = (targetLastPos - transform.position).normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -112,7 +118,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
         if (collision.gameObject.layer == buildingLayer)
         {
             collision.gameObject.GetComponent<HealthSystem>().GetDamage(10);
-            OnDestroy?.Invoke(this);
+            OnPolableDestroy?.Invoke(this);
         }
     }
 
@@ -120,7 +126,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     {
         if(collision.gameObject.layer == projectileLayer)
         {
-            OnDestroy?.Invoke(this);
+            OnPolableDestroy?.Invoke(this);
         }
     }
 
@@ -128,6 +134,8 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     {
         moveDirection = Vector3.zero;
         rb.velocity = Vector2.zero;
+        time = refreshTargeInterval;
+        target = null;
         gameObject.SetActive(false);
     }
 }

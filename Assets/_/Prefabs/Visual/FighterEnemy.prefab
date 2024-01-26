@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3558319436372859904
 Transform:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ee5aa9800d23e6648b3abb72bc29604b, type: 2}
+  - {fileID: 2100000, guid: 331816b3e20f7b143a20a67fb6c994a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -190,5 +190,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
+  buildingLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   buildingLayer: 6
   projectileLayer: 3
+  time: 0.5

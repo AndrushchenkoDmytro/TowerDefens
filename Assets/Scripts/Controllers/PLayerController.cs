@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PLayerController : MonoBehaviour
 {
+    [SerializeField] private Transform mainTower;
     public static PLayerController Instance;
     public Vector3 mousePosition { get; private set; }
     private Camera mainCamera;
@@ -14,7 +15,7 @@ public class PLayerController : MonoBehaviour
     private int layerBitMask = 1 << 6 | 1 << 7;
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
-    [SerializeField] private Transform mainTower;
+    BuildingConstruction buildingConstruction;
     public Transform MainTower()
     {
         return mainTower;
@@ -34,6 +35,10 @@ public class PLayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        mainTower.GetComponent<MainTower>().OnGameOver += () => 
+        {
+            gameObject.SetActive(false); 
+        };
     }
     void Start()
     {
@@ -63,8 +68,11 @@ public class PLayerController : MonoBehaviour
         {
             if(activeBuildingType != null && CanSpawnBuilding() == true)
             {
-                if(ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
-                Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
+                if (ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
+                {
+                    buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(mousePosition);
+                    buildingConstruction.SetBuildingType(activeBuildingType);
+                }
             }
         }
     }
@@ -89,7 +97,7 @@ public class PLayerController : MonoBehaviour
         
         foreach (Collider2D building in boxOverlapArray)
         {
-            if(building.GetComponent<BuildingTypeHolder>().GetHolderBuilding().name == activeBuildingType.name)
+            if(building.GetComponent<BuildingTypeHolder>().GetHolderBuildingType().name == activeBuildingType.name)
             {
                 ToolTips.Instance.ShowVeryCloseToBuildingOfSameTypeTip();
                 return false;

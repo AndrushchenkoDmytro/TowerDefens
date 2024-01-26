@@ -11,6 +11,7 @@ public class GhostBuilding : MonoBehaviour
     {
         ghostSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         performanceOverlay = GetComponent<ProductionPerformanceOverlay>();
+        GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () => { gameObject.SetActive(false); };
     }
 
     private void Start()

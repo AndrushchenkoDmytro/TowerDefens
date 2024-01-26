@@ -5,20 +5,27 @@ using TMPro;
 
 public class EnemyWaveUI : MonoBehaviour
 {
+    [SerializeField] private RectTransform enemyWavePositionIndicator;
+    private Vector3 indicatorDirection;
+    private float indicatorOffset = 300f;
+    private float distanceToSpawnPos = 0;
+    private Transform mainCamera;
+
     [SerializeField] private EnemyWavesManager enemyWavesManager;
     [SerializeField] private TextMeshProUGUI waveIndex;
     [SerializeField] private TextMeshProUGUI timeToNextWave;
     [SerializeField] private TextMeshProUGUI timeWarning;
-    [SerializeField] private Color32 color;
-    [SerializeField] private float colorAlfa = 255;
+    private Color32 color;
+    private float colorAlfa = 255;
 
-    [SerializeField] private bool startÑountdown = false;
-    [SerializeField] private bool hideTimer = false;
-    [SerializeField] private float time = 1;
+    private bool startÑountdown = false;
+    private bool hideTimer = false;
+    private float time = 1;
     private void Awake()
     {
         enemyWavesManager.OnEnemyWaveIncrease += ChangeWaveIndex;
         enemyWavesManager.OnNextWaveStarting += CheckNextWaveCountdown;
+        mainCamera = Camera.main.transform;
     }
 
     private void Update()
@@ -26,7 +33,6 @@ public class EnemyWaveUI : MonoBehaviour
         if (startÑountdown)
         {
             float timeToWave = enemyWavesManager.nextWaveTimer;
-            Debug.Log("float timeToWave = " + timeToWave);
             if (timeToWave > 0) 
             {
                 timeToNextWave.text = timeToWave.ToString("F2");
@@ -55,6 +61,8 @@ public class EnemyWaveUI : MonoBehaviour
                 hideTimer = false;
             }
         }
+
+        UpdateIndicator();
     }
 
     private void ChangeWaveIndex(int index)
@@ -68,5 +76,31 @@ public class EnemyWaveUI : MonoBehaviour
         color.a = (byte)colorAlfa;
         timeToNextWave.color = color;
         timeWarning.color = color;
+    }
+
+    private void UpdateIndicator()
+    {
+        RefreshIndicatorTransform();
+        CheckActive();
+    }
+
+    private void RefreshIndicatorTransform()
+    {
+        indicatorDirection = (enemyWavesManager.GetWaveSpawnPosition() - mainCamera.transform.position).normalized;
+        enemyWavePositionIndicator.anchoredPosition = indicatorDirection * indicatorOffset;
+        enemyWavePositionIndicator.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(indicatorDirection));
+    }
+
+    private void CheckActive()
+    {
+        distanceToSpawnPos = Vector3.Distance(enemyWavesManager.GetWaveSpawnPosition(), mainCamera.position);
+        if (distanceToSpawnPos < 20)
+        {
+            enemyWavePositionIndicator.gameObject.SetActive(false);
+        }
+        else
+        {
+            enemyWavePositionIndicator.gameObject.SetActive(true);
+        }
     }
 }
