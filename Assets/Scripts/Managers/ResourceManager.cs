@@ -34,8 +34,8 @@ public class ResourceManager : MonoBehaviour
 
     private void InitializeResources()
     {
-        resources.Add(ResourceTypes.Wood, 60);
-        resources.Add(ResourceTypes.Stone, 0);
+        resources.Add(ResourceTypes.Wood, 120);
+        resources.Add(ResourceTypes.Stone, 100);
         resources.Add(ResourceTypes.Gold, 0);
     }
 
@@ -64,6 +64,7 @@ public class ResourceManager : MonoBehaviour
         resources[ResourceTypes.Wood] -= pricelist.wood;
         resources[ResourceTypes.Stone] -= pricelist.stone;
         resources[ResourceTypes.Gold] -= pricelist.gold;
+        OnResourcesAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 
 }

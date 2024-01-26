@@ -25,6 +25,8 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         healthSystem.OnHealthChangedEvent += ChangeHealthInBar;
+        healthSystem.OnDiedEvent += (objcet,e) => { healthSystem.OnHealthChangedEvent -= ChangeHealthInBar; };
+        healthSystem.OnResetToDefoult += ResetBarToDefoult;
         HideHealthBar();
         currentHealth = healthBarProgress.localScale.x;
     }
@@ -84,7 +86,6 @@ public class HealthBar : MonoBehaviour
                 healthBarProgress.localScale = new Vector3(healTarget, 1, 1);
                 isStateSwitched = false;
                 healthBarProgressSprite.color = reduceHealthProgressColor;
-                Debug.Log("Switching");
                 yield return new WaitForSeconds(0.075f);
             }
             else if (isHealthReduce)
@@ -96,7 +97,6 @@ public class HealthBar : MonoBehaviour
                     isChangeHealthCoroutineEnd = true;
                     yield break;
                 }
-                Debug.Log("Reduce");
                 yield return new WaitForFixedUpdate();
             }
             else
@@ -115,6 +115,14 @@ public class HealthBar : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+    }
+    private void ResetBarToDefoult(object sender, System.EventArgs e)
+    {
+        targetHealth = 1;
+        healthBarProgress.localScale = new Vector3(1, 1, 1);
+        healthBarFG.localScale = new Vector3(1, 1, 1);
+        healthBarProgressSprite.color = reduceHealthProgressColor;
+        HideHealthBar();
     }
 
     private void ShowHealthBar()

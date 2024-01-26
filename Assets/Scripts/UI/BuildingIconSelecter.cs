@@ -24,6 +24,7 @@ public class BuildingIconSelecter : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         selectTypeButton = GetComponent<Button>();
+        GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () => { selectTypeButton.enabled = false; };
         //iconOriginalSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
         distance = (iconOriginalSize.x + offset) * iconIndex;
     }

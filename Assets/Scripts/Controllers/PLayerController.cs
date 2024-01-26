@@ -6,15 +6,16 @@ using UnityEngine.EventSystems;
 
 public class PLayerController : MonoBehaviour
 {
+    [SerializeField] private Transform mainTower;
     public static PLayerController Instance;
     public Vector3 mousePosition { get; private set; }
     private Camera mainCamera;
     public BuildingsTypeSo activeBuildingType { get; private set; }
     [SerializeField] private LayerMask buildingLayer;
-
+    private int layerBitMask = 1 << 6 | 1 << 7;
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
-    [SerializeField] private Transform mainTower;
+    BuildingConstruction buildingConstruction;
     public Transform MainTower()
     {
         return mainTower;
@@ -34,6 +35,10 @@ public class PLayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        mainTower.GetComponent<MainTower>().OnGameOver += () => 
+        {
+            gameObject.SetActive(false); 
+        };
     }
     void Start()
     {
@@ -47,7 +52,6 @@ public class PLayerController : MonoBehaviour
         {
             UpdateMousePosition();
             SpawnBuilding();
-
         }
     }
 
@@ -64,8 +68,11 @@ public class PLayerController : MonoBehaviour
         {
             if(activeBuildingType != null && CanSpawnBuilding() == true)
             {
-                if(ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
-                Instantiate(activeBuildingType.prefab, mousePosition, Quaternion.identity);
+                if (ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
+                {
+                    buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(mousePosition);
+                    buildingConstruction.SetBuildingType(activeBuildingType);
+                }
             }
         }
     }
@@ -79,18 +86,18 @@ public class PLayerController : MonoBehaviour
     private bool CanSpawnBuilding()
     {
         BoxCollider2D activeBuildingCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
-        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0);
-        if (boxOverlap2D != null) 
-        { 
+        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0,layerBitMask);
+        if (boxOverlap2D != null)
+        {
             ToolTips.Instance.ShowNotEnoughSpaceTip(); 
             return false;
         };
 
         Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);
-        foreach (BoxCollider2D  building in boxOverlapArray)
+        
+        foreach (Collider2D building in boxOverlapArray)
         {
-            Debug.Log(building.gameObject);
-            if(building.GetComponent<BuildingTypeHolder>().GetHolderBuilding().name == activeBuildingType.name)
+            if(building.GetComponent<BuildingTypeHolder>().GetHolderBuildingType().name == activeBuildingType.name)
             {
                 ToolTips.Instance.ShowVeryCloseToBuildingOfSameTypeTip();
                 return false;

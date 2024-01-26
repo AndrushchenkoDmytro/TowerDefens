@@ -10,6 +10,7 @@ public class BuildingsTypeSo : ScriptableObject
     public PriceList constructPriceList;
     public Sprite buildingSprite;
     public float blockConstracionRadius = 10;
+    public float constractionTime;
 }
 
 public enum BuildingClass

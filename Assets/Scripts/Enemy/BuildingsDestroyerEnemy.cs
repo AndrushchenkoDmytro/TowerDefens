@@ -2,21 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFighter : MonoBehaviour, IEnemy
+public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
 {
     private Transform mainTower;
     private Transform tempTarget;
     [SerializeField] private Transform target;
+    private Vector3 targetLastPos;
     [SerializeField] private Vector3 moveDirection = Vector3.zero;
     private float moveSpeed = 6;
     private float searchRadius = 12f;
-    [SerializeField] private LayerMask buildingLayer;
+    [SerializeField] private LayerMask buildingLayerMask;
+    [SerializeField] private int buildingLayer;
+    [SerializeField] private int projectileLayer;
 
     private float distanceToTarget = 0;
-    private float time = 0.7f;
-    private float findTargeTimetInterval = 0.8f;
+    [SerializeField] private float time = 0.5f;
+    private float refreshTargeInterval = 0.65f;
 
     private Rigidbody2D rb;
+
+    public event System.Action<IPoolable> OnPolableDestroy;
+
     void Awake()
     {
         moveSpeed = Random.Range(5.5f, 6.5f);
@@ -50,7 +56,7 @@ public class EnemyFighter : MonoBehaviour, IEnemy
 
     private void RefreshTarget()
     {
-        if(time < findTargeTimetInterval)
+        if(time < refreshTargeInterval)
         {
             time += Time.deltaTime;
         }
@@ -62,36 +68,38 @@ public class EnemyFighter : MonoBehaviour, IEnemy
     }
 
     private void FindTarget()
-    {        
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, searchRadius, buildingLayer);
+    {
+        Debug.Log("buildingLayer = "+buildingLayer);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, searchRadius, buildingLayerMask);
         if(target != null)
         {
-            Debug.Log("targetGO != null");
             distanceToTarget = Vector3.Distance(transform.position, target.position);
         }
         else
         {
-            Debug.Log("DistanceMax");
             distanceToTarget = float.MaxValue;
         }
         float tempDistance = 0;
         tempTarget = null;
-        foreach (Collider2D target in targets)
+        foreach (Collider2D targetCollider in targets)
         {
-            tempDistance = Vector3.Distance(transform.position,target.transform.position);
+            Debug.Log(targetCollider.transform.gameObject.name + " = " + targetCollider.transform.gameObject.layer);
+            tempDistance = Vector3.Distance(transform.position,targetCollider.transform.position);
             if(tempDistance <= distanceToTarget)
             {
-                tempTarget = target.transform;
+                tempTarget = targetCollider.transform;
                 distanceToTarget = tempDistance;
             }
         }
         if (tempTarget != null)
         {
             target = tempTarget;
+            targetLastPos = target.position;
         }
         else
         {
             target = mainTower;
+            if(target != null) { targetLastPos = target.position; }
         }
         if (target == null)
         {
@@ -102,19 +110,32 @@ public class EnemyFighter : MonoBehaviour, IEnemy
     }
     private void CalculateMoveDirection()
     {
-        moveDirection = (target.position - transform.position).normalized;
+        moveDirection = (targetLastPos - transform.position).normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("EnemyFighter");
-        Debug.Log(collision.gameObject);
-        Debug.Log(collision.gameObject.layer);
-        Debug.Log(gameObject.name + collision.gameObject.layer == buildingLayer.ToString());
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == buildingLayer)
         {
             collision.gameObject.GetComponent<HealthSystem>().GetDamage(10);
-            Destroy(gameObject);
+            OnPolableDestroy?.Invoke(this);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == projectileLayer)
+        {
+            OnPolableDestroy?.Invoke(this);
+        }
+    }
+
+    public void Reset()
+    {
+        moveDirection = Vector3.zero;
+        rb.velocity = Vector2.zero;
+        time = refreshTargeInterval;
+        target = null;
+        gameObject.SetActive(false);
     }
 }
