@@ -10,6 +10,7 @@ public class BuildingRepairButton : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private HealthSystem healthSystem;
     private float repairAmount = 0;
     private int repairCost = 0;
+    private PriceList repairPricesList = new PriceList();
     [SerializeField] private float fullRepairCost = 50;
     [SerializeField] private GameObject priceToolTip;
     private TextMeshProUGUI priceValue;
@@ -23,7 +24,11 @@ public class BuildingRepairButton : MonoBehaviour, IPointerEnterHandler, IPointe
         healthSystem.OnCanBeRepair += ShowRepairButton;
 
         GetComponentInChildren<Button>().onClick.AddListener(() => {
-            healthSystem.GetHeal(200);
+            if (ResourceManager.Instance.CanAfford(repairPricesList))
+            {
+                healthSystem.GetHeal(200);
+            };
+
             priceToolTip.SetActive(false);
             transform.parent.gameObject.SetActive(false);
         });
@@ -39,6 +44,7 @@ public class BuildingRepairButton : MonoBehaviour, IPointerEnterHandler, IPointe
         transform.parent.gameObject.SetActive(false);
         repairAmount += e.deltaNormilizeValue;
         repairCost = Mathf.RoundToInt(repairAmount * fullRepairCost);
+        repairPricesList.gold = repairCost;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
