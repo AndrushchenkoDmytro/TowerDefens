@@ -33,7 +33,7 @@ public class HealthSystem : MonoBehaviour
     {
         int beforHealth = healthAmount;
         healthAmount -= damageAmount;
-
+        SoundManager.instance.PlaySound(SoundManager.Sound.BuildingDamaged);
 
         time = 0;
         if (canBeRecover == true)
@@ -46,6 +46,7 @@ public class HealthSystem : MonoBehaviour
         {
             healthAmount = 0;
             Debug.Log("Smert");
+            SoundManager.instance.PlaySound(SoundManager.Sound.BuildingDestroyed);
             OnDiedEvent?.Invoke(this, EventArgs.Empty);
             Destroy(gameObject);
         }

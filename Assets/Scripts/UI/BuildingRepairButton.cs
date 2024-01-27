@@ -27,10 +27,9 @@ public class BuildingRepairButton : MonoBehaviour, IPointerEnterHandler, IPointe
             if (ResourceManager.Instance.CanAfford(repairPricesList))
             {
                 healthSystem.GetHeal(200);
+                priceToolTip.SetActive(false);
+                transform.parent.gameObject.SetActive(false);
             };
-
-            priceToolTip.SetActive(false);
-            transform.parent.gameObject.SetActive(false);
         });
         transform.parent.gameObject.SetActive(false);
     }

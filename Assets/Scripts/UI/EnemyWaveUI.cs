@@ -26,6 +26,7 @@ public class EnemyWaveUI : MonoBehaviour
         enemyWavesManager.OnEnemyWaveIncrease += ChangeWaveIndex;
         enemyWavesManager.OnNextWaveStarting += CheckNextWaveCountdown;
         mainCamera = Camera.main.transform;
+        color = timeWarning.color;
     }
 
     private void Update()
