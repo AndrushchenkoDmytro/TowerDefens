@@ -10,6 +10,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private int healthAmountMax = 100;
 
     public event EventHandler<OnHealthChangedEventHandler> OnHealthChangedEvent;
+    public event EventHandler OnCanBeRepair;
     public event EventHandler OnResetToDefoult;
     public event EventHandler OnDiedEvent;
 
@@ -78,6 +79,7 @@ public class HealthSystem : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         canBeRecover = true;
+        OnCanBeRepair?.Invoke(this, EventArgs.Empty);
         yield break;
     }
 
