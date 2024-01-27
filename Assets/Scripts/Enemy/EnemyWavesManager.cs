@@ -116,4 +116,9 @@ public class EnemyWavesManager : MonoBehaviour
     {
         return spawnZone.position;
     }
+
+    public int GetWaveIndex()
+    {
+        return waveIndex;
+    }
 }

@@ -10,7 +10,13 @@ public class CameraController : MonoBehaviour
     [SerializeField] float zoomSpeed = 10;
     private float currentCameraSize = 15;
     private float targetCameraSize;
-
+    private void Awake()
+    {
+        GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () =>
+        {
+            enabled = false;
+        };
+    }
     private void Start()
     {
         currentCameraSize = virtualCamera.m_Lens.OrthographicSize;

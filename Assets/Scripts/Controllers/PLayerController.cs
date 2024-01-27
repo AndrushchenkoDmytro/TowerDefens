@@ -37,7 +37,8 @@ public class PLayerController : MonoBehaviour
         }
         mainTower.GetComponent<MainTower>().OnGameOver += () => 
         {
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
+            enabled = false;
         };
     }
     void Start()
