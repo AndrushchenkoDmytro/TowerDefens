@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2641d7ef6af3c94c8e806df055b89eb, type: 3}
   m_Name: GoldHarvester
   m_EditorClassIdentifier: 
-  nameString: G
-  prefab: {fileID: 4107679504086320461, guid: b710238c5889a504f9ccb5f85e24a2ef, type: 3}
+  prefab: {fileID: 2156701223262941851, guid: be38c585b36f6194a8bb08b68a0c4302, type: 3}
+  buildingClass: 1
+  constructPriceList:
+    wood: 80
+    stone: 40
+    gold: 0
   buildingSprite: {fileID: 21300000, guid: 8ead931dd91bff8489e75de9c414f17f, type: 3}
+  blockConstracionRadius: 7
+  constractionTime: 3
