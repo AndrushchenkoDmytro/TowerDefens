@@ -7,12 +7,6 @@ public class OptionsMenu : MonoBehaviour
 {
     private Animator animator;
     private GameObject optionsButton;
-    [SerializeField] private Image soundImage;
-    [SerializeField] private Sprite onSoundSprite;
-    [SerializeField] private Sprite offSoundSprite;
-    [SerializeField] private Image musicImage;
-    [SerializeField] private Sprite onMusicSprite;
-    [SerializeField] private Sprite offMusicSprite;
     private GameObject optionMenuContainer;
     private Transform gameUI;
 
@@ -30,15 +24,6 @@ public class OptionsMenu : MonoBehaviour
 
         optionsButton.GetComponent<Button>().onClick.AddListener(ShowOptionMenuBtn);
         optionMenuContainer.SetActive(false);
-    }
-
-    private void Start()
-    {
-        if (SoundManager.instance.isSoundOn) soundImage.sprite = onSoundSprite;
-        else soundImage.sprite = offSoundSprite;
-
-        if (SoundManager.instance.isMusicOn) musicImage.sprite = onMusicSprite;
-        else musicImage.sprite = offMusicSprite;
     }
 
     public void ShowOptionMenuBtn()
@@ -78,33 +63,6 @@ public class OptionsMenu : MonoBehaviour
     public void ToMainMenuBtn()
     {
         SceneLoadManager.instance.LoadLevel(0); // mainMenu;
-    }
-
-    public void SwitcheSoundVolume()
-    {
-        if (SoundManager.instance.isSoundOn)
-        {
-            soundImage.sprite = offSoundSprite;
-            SoundManager.instance.OnSound(false);
-        }
-        else
-        {
-            soundImage.sprite = onSoundSprite;
-            SoundManager.instance.OnSound(true);
-        }
-    }
-    public void SwitcheMusicVolume()
-    {
-        if (SoundManager.instance.isMusicOn)
-        {
-            musicImage.sprite = offMusicSprite;
-            SoundManager.instance.OnMusic(false);
-        }
-        else
-        {
-            musicImage.sprite = onMusicSprite;
-            SoundManager.instance.OnMusic(true);
-        }
     }
 
 }
