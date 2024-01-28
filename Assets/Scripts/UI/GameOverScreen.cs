@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField] private GameObject gameUI;
@@ -18,16 +16,18 @@ public class GameOverScreen : MonoBehaviour
         animator = GetComponent<Animator>();
         GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () => 
         {
+            Time.timeScale = 0;
+            SoundManager.instance.PlaySound(SoundManager.Sound.GameOver);
             HideGameCanvas();
             ShowGameOverScreen();
         };
         transform.GetChild(3).GetComponent<Button>().onClick.AddListener( () =>
         {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex); // retry
+            SceneLoadManager.instance.RetryLevel(); // retry
         });
         transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() =>
         {
-            SceneManager.LoadSceneAsync(0); // mainMenu;
+        SceneLoadManager.instance.LoadLevel(0); // mainMenu;
         });
         gameObject.SetActive(false);
     }

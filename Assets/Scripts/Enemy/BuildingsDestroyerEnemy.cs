@@ -118,6 +118,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
         if (collision.gameObject.layer == buildingLayer)
         {
             collision.gameObject.GetComponent<HealthSystem>().GetDamage(10);
+            SoundManager.instance.PlaySound(SoundManager.Sound.EnemyDie);
             OnPolableDestroy?.Invoke(this);
         }
     }
@@ -126,6 +127,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     {
         if(collision.gameObject.layer == projectileLayer)
         {
+            SoundManager.instance.PlaySound(SoundManager.Sound.EnemyDie);
             OnPolableDestroy?.Invoke(this);
         }
     }

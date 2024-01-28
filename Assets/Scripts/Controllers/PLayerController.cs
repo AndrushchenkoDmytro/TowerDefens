@@ -73,6 +73,7 @@ public class PLayerController : MonoBehaviour
                 {
                     buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(mousePosition);
                     buildingConstruction.SetBuildingType(activeBuildingType);
+                    SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
                 }
             }
         }
