@@ -7,9 +7,12 @@ using UnityEngine.EventSystems;
 public class PLayerController : MonoBehaviour
 {
     [SerializeField] private Transform mainTower;
-    public static PLayerController Instance;
-    public Vector3 mousePosition { get; private set; }
+    public static PLayerController instance;
+
+    [SerializeField] private Transform ghost;        
     private Camera mainCamera;
+    private Vector2 screenCenter;
+    private bool isPointerOverGameobject = false;
     public BuildingsTypeSo activeBuildingType { get; private set; }
     [SerializeField] private LayerMask buildingLayer;
     private int layerBitMask = 1 << 6 | 1 << 7;
@@ -27,9 +30,9 @@ public class PLayerController : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if(instance == null)
         {
-            Instance = this;
+            instance = this;
         }
         else
         {
@@ -40,6 +43,9 @@ public class PLayerController : MonoBehaviour
             gameObject.SetActive(false);
             enabled = false;
         };
+        screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+
+
     }
     void Start()
     {
@@ -49,32 +55,44 @@ public class PLayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if(Input.touchCount > 0)
         {
-            UpdateMousePosition();
-            SpawnBuilding();
+            Touch touch = Input.GetTouch(0);
+            if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                if (isPointerOverGameobject == false)
+                {
+                    Vector3 touchWorldPos =  mainCamera.ScreenToWorldPoint(touch.position);
+                    touchWorldPos.z = 0;
+                    Vector3 moveDir = (ghost.position - touchWorldPos).normalized;
+                    moveDir.x *= 1.4f;
+                    ghost.position -= moveDir * 15 * Time.deltaTime;
+                }
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    if(isPointerOverGameobject == false)
+                    {
+                        SpawnBuilding();
+                    }
+                    isPointerOverGameobject = false;
+                }
+            }
+            else
+            {
+                isPointerOverGameobject = true;
+            }
         }
-    }
-
-    private void UpdateMousePosition()
-    {
-        Vector3 worldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        worldPos.z = 0;
-        mousePosition = worldPos;
     }
 
     private void SpawnBuilding()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(activeBuildingType != null && CanSpawnBuilding() == true)
         {
-            if(activeBuildingType != null && CanSpawnBuilding() == true)
+            if (ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
             {
-                if (ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
-                {
-                    buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(mousePosition);
-                    buildingConstruction.SetBuildingType(activeBuildingType);
-                    SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
-                }
+                buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(ghost.position);
+                buildingConstruction.SetBuildingType(activeBuildingType);
+                SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
             }
         }
     }
@@ -82,20 +100,23 @@ public class PLayerController : MonoBehaviour
     public void SetActiveBuildingType(BuildingsTypeSo buildingsTypeSo)
     {
         activeBuildingType = buildingsTypeSo;
+        Vector3 center = mainCamera.ScreenToWorldPoint(screenCenter);
+        center.z = 0;
+        ghost.position = center;
         OnActiveBuildingChanged?.Invoke(this,new OnActiveBuildingChangedArgs { activeBuilding = activeBuildingType});
     }
 
     private bool CanSpawnBuilding()
     {
         BoxCollider2D activeBuildingCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
-        Collider2D boxOverlap2D = Physics2D.OverlapBox(mousePosition + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0,layerBitMask);
+        Collider2D boxOverlap2D = Physics2D.OverlapBox(ghost.position + (Vector3)activeBuildingCollider2D.offset, activeBuildingCollider2D.size, 0,layerBitMask);
         if (boxOverlap2D != null)
         {
             ToolTips.Instance.ShowNotEnoughSpaceTip(); 
             return false;
         };
 
-        Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(mousePosition, activeBuildingType.blockConstracionRadius, buildingLayer);
+        Collider2D[] boxOverlapArray = Physics2D.OverlapCircleAll(ghost.position, activeBuildingType.blockConstracionRadius, buildingLayer);
         
         foreach (Collider2D building in boxOverlapArray)
         {

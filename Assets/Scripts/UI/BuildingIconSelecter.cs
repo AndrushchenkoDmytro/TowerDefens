@@ -31,9 +31,9 @@ public class BuildingIconSelecter : MonoBehaviour
     private void Start()
     {
         selectTypeButton.onClick.AddListener(() => {
-            if(PLayerController.Instance.activeBuildingType == selectType)
+            if(PLayerController.instance.activeBuildingType == selectType)
             {
-                PLayerController.Instance.SetActiveBuildingType(null);
+                PLayerController.instance.SetActiveBuildingType(null);
                 selectionImage.gameObject.SetActive(false);
             }
             else
@@ -49,7 +49,7 @@ public class BuildingIconSelecter : MonoBehaviour
                     selectionImage.transform.SetSiblingIndex(0);
                     selectionImage.transform.localPosition = new Vector3(0, 0, 0);
                 }
-                PLayerController.Instance.SetActiveBuildingType(selectType);
+                PLayerController.instance.SetActiveBuildingType(selectType);
             }            
         });
     }

@@ -16,7 +16,7 @@ public class GhostBuilding : MonoBehaviour
 
     private void Start()
     {
-        PLayerController.Instance.OnActiveBuildingChanged += ((sender,e) =>
+        PLayerController.instance.OnActiveBuildingChanged += ((sender,e) =>
         {
             if(e.activeBuilding == null)
             {
@@ -27,12 +27,6 @@ public class GhostBuilding : MonoBehaviour
                 Show(e.activeBuilding);
             }
         });
-    }
-
-    private void Update()
-    {
-        transform.position = PLayerController.Instance.mousePosition;
-
     }
 
     public void Show(BuildingsTypeSo building)

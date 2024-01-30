@@ -30,7 +30,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        mainTower = PLayerController.Instance.MainTower();
+        mainTower = PLayerController.instance.MainTower();
         target = mainTower;
         CalculateMoveDirection();
     }
@@ -69,7 +69,6 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
 
     private void FindTarget()
     {
-        Debug.Log("buildingLayer = "+buildingLayer);
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, searchRadius, buildingLayerMask);
         if(target != null)
         {
@@ -83,7 +82,6 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
         tempTarget = null;
         foreach (Collider2D targetCollider in targets)
         {
-            Debug.Log(targetCollider.transform.gameObject.name + " = " + targetCollider.transform.gameObject.layer);
             tempDistance = Vector3.Distance(transform.position,targetCollider.transform.position);
             if(tempDistance <= distanceToTarget)
             {

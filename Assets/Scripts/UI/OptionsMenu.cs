@@ -10,11 +10,6 @@ public class OptionsMenu : MonoBehaviour
     private GameObject optionMenuContainer;
     private Transform gameUI;
 
-    private void Update()
-    {
-        Debug.Log(Time.timeScale);
-    }
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
