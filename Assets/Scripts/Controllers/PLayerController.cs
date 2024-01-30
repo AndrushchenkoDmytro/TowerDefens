@@ -11,6 +11,7 @@ public class PLayerController : MonoBehaviour
 
     [SerializeField] private Transform ghost;        
     private Camera mainCamera;
+    private Vector3 moveDir;
     private Vector2 screenCenter;
     private bool isPointerOverGameobject = false;
     public BuildingsTypeSo activeBuildingType { get; private set; }
@@ -18,6 +19,7 @@ public class PLayerController : MonoBehaviour
     private int layerBitMask = 1 << 6 | 1 << 7;
     public EventHandler<OnActiveBuildingChangedArgs> OnActiveBuildingChanged;
 
+    [SerializeField] private GameObject particlesPrefab;
     BuildingConstruction buildingConstruction;
     public Transform MainTower()
     {
@@ -64,7 +66,7 @@ public class PLayerController : MonoBehaviour
                 {
                     Vector3 touchWorldPos =  mainCamera.ScreenToWorldPoint(touch.position);
                     touchWorldPos.z = 0;
-                    Vector3 moveDir = (ghost.position - touchWorldPos).normalized;
+                    moveDir = (ghost.position - touchWorldPos).normalized;
                     moveDir.x *= 1.4f;
                     ghost.position -= moveDir * 15 * Time.deltaTime;
                 }
@@ -73,6 +75,9 @@ public class PLayerController : MonoBehaviour
                     if(isPointerOverGameobject == false)
                     {
                         SpawnBuilding();
+                        Vector3 center = mainCamera.ScreenToWorldPoint(screenCenter) + moveDir;
+                        center.z = 0;
+                        ghost.position = center;
                     }
                     isPointerOverGameobject = false;
                 }
@@ -92,6 +97,7 @@ public class PLayerController : MonoBehaviour
             {
                 buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(ghost.position);
                 buildingConstruction.SetBuildingType(activeBuildingType);
+                Instantiate(particlesPrefab, ghost.position, Quaternion.identity);
                 SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
             }
         }

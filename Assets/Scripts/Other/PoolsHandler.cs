@@ -5,19 +5,20 @@ using UnityEngine;
 public class PoolsHandler : MonoBehaviour
 {
     [SerializeField] private GameObject buildingsDestroyerPrefab;
-    [SerializeField] private Transform buildingsDestroyerContainer;
-
     [SerializeField] private GameObject resourcesDestroyerPrefab;
-    [SerializeField] private Transform resourcesDestroyerContainer;
+    [SerializeField] private Transform enemysContainer;
 
     [SerializeField] private GameObject buildingConstructionPrefab;
     [SerializeField] private Transform buildingConstructionContainer;
 
+    [SerializeField] private GameObject enemyParticlesPrefab;
+    [SerializeField] private Transform enemyParticlesContainer;
+    
     public static PoolsHandler instance;
     public ObjectPool<BuildingsDestroyerEnemy> buildingDestroyers { get; private set; }
     public ObjectPool<ResourcesDestroyerEnemy> resourceDestroyers { get; private set; }
-
     public ObjectPool<BuildingConstruction> buildingConstructions { get; private set; }
+    public ObjectPool<EnemyParticals> enemyParticles { get; private set; }
 
     private void Awake()
     {
@@ -34,8 +35,9 @@ public class PoolsHandler : MonoBehaviour
 
     private void Initialize()
     {
-        buildingDestroyers = new ObjectPool<BuildingsDestroyerEnemy>(buildingsDestroyerPrefab, buildingsDestroyerContainer);
-        resourceDestroyers = new ObjectPool<ResourcesDestroyerEnemy>(resourcesDestroyerPrefab, resourcesDestroyerContainer);
+        buildingDestroyers = new ObjectPool<BuildingsDestroyerEnemy>(buildingsDestroyerPrefab, enemysContainer);
+        resourceDestroyers = new ObjectPool<ResourcesDestroyerEnemy>(resourcesDestroyerPrefab, enemysContainer);
         buildingConstructions = new ObjectPool<BuildingConstruction>(buildingConstructionPrefab, buildingConstructionContainer);
+        enemyParticles = new ObjectPool<EnemyParticals>(enemyParticlesPrefab, enemyParticlesContainer);
     }
 }

@@ -8,6 +8,7 @@ public class HealthSystem : MonoBehaviour
 {
     private int healthAmount = 0;
     [SerializeField] private int healthAmountMax = 100;
+    [SerializeField] private GameObject destroyParticles;
 
     public event EventHandler<OnHealthChangedEventHandler> OnHealthChangedEvent;
     public event EventHandler OnCanBeRepair;
@@ -45,7 +46,7 @@ public class HealthSystem : MonoBehaviour
         if(healthAmount <0)
         {
             healthAmount = 0;
-            Debug.Log("Smert");
+            Instantiate(destroyParticles,transform.position, Quaternion.identity);
             SoundManager.instance.PlaySound(SoundManager.Sound.BuildingDestroyed);
             OnDiedEvent?.Invoke(this, EventArgs.Empty);
             Destroy(gameObject);

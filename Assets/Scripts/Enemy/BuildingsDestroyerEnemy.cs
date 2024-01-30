@@ -14,12 +14,12 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     [SerializeField] private LayerMask buildingLayerMask;
     [SerializeField] private int buildingLayer;
     [SerializeField] private int projectileLayer;
-
     private float distanceToTarget = 0;
-    [SerializeField] private float time = 0.5f;
+    private float time = 0.5f;
     private float refreshTargeInterval = 0.65f;
 
     private Rigidbody2D rb;
+    [SerializeField] private Color particleColor;
 
     public event System.Action<IPoolable> OnPolableDestroy;
 
@@ -116,8 +116,7 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
         if (collision.gameObject.layer == buildingLayer)
         {
             collision.gameObject.GetComponent<HealthSystem>().GetDamage(10);
-            SoundManager.instance.PlaySound(SoundManager.Sound.EnemyDie);
-            OnPolableDestroy?.Invoke(this);
+            ReturnToPool();
         }
     }
 
@@ -125,11 +124,17 @@ public class BuildingsDestroyerEnemy : MonoBehaviour, IEnemy, IPoolable
     {
         if(collision.gameObject.layer == projectileLayer)
         {
-            SoundManager.instance.PlaySound(SoundManager.Sound.EnemyDie);
-            OnPolableDestroy?.Invoke(this);
+            ReturnToPool();
         }
     }
-
+    private void ReturnToPool()
+    {
+        EnemyParticals ep = PoolsHandler.instance.enemyParticles.GetObjectFromPool(transform.position);
+        ep.SetStartColor(particleColor);
+        ep.PlayParticles();
+        SoundManager.instance.PlaySound(SoundManager.Sound.EnemyDie);
+        OnPolableDestroy?.Invoke(this);
+    }
     public void Reset()
     {
         moveDirection = Vector3.zero;

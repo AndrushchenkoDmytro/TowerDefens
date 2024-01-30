@@ -5976,6 +5976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAmountMax: 100
+  destroyParticles: {fileID: 7186901638340864668, guid: 5731055b57af76744aa0f260d9e0e788, type: 3}
   canBeRecover: 1
   time: 0
 --- !u!1 &5397999609338218780
