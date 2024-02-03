@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -34,8 +32,8 @@ public class ResourceManager : MonoBehaviour
 
     private void InitializeResources()
     {
-        resources.Add(ResourceTypes.Wood, 120);
-        resources.Add(ResourceTypes.Stone, 100);
+        resources.Add(ResourceTypes.Wood, 60);
+        resources.Add(ResourceTypes.Stone, 0);
         resources.Add(ResourceTypes.Gold, 0);
     }
 
@@ -55,8 +53,12 @@ public class ResourceManager : MonoBehaviour
         if (resources[ResourceTypes.Wood] < pricelist.wood) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
         if (resources[ResourceTypes.Stone] < pricelist.stone) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
         if (resources[ResourceTypes.Gold] < pricelist.gold) { ToolTips.Instance.ShowNotEnoughResourcesTip(); return false; }
-        MakePurchase(pricelist);
         return true;
+    }
+
+    public void Afford(PriceList pricelist)
+    {
+        MakePurchase(pricelist);
     }
 
     private void MakePurchase(PriceList pricelist)
@@ -74,5 +76,6 @@ public enum ResourceTypes
 {
     Wood,
     Stone,
-    Gold
+    Gold,
+    Nothing
 }

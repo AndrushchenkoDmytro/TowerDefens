@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExpandableButton : MonoBehaviour
@@ -18,22 +16,18 @@ public class ExpandableButton : MonoBehaviour
 
     public void ClickButton()
     {
-        Debug.Log("Button");
         if (isClickAble)
         {
-            Debug.Log("Click");
             hp = 0;
             isClickAble = false;
             animator.Play("ExpandButton");
             if(isDeployment)
             {
                 StartCoroutine(DeploymentIcons());
-                Debug.Log("Deployment");
             }
             else
             {
                 StartCoroutine(ÑollapseIcons());
-                Debug.Log("Collapse");
             }
             isDeployment = !isDeployment;
         }
@@ -62,7 +56,6 @@ public class ExpandableButton : MonoBehaviour
         hp += 1;
         if(hp == buildingIcons.Length)
         {
-            Debug.Log("hp == buildingIcons.Length");
             isClickAble = true;
         }
     }

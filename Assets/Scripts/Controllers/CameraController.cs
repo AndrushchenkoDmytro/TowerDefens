@@ -1,17 +1,17 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
     private Camera mainCamera;
+    [SerializeField] private Camera miniMapCamera;
     [SerializeField] Transform ghost;
     Transform followTarget;
     private bool isFollowTargetGhost = false;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     [SerializeField] private Vector2 cameraBounds = new Vector2(70, 70);
-    [SerializeField] float moveSpeed = 20;
-    [SerializeField] float zoomSpeed = 10;
+    [SerializeField] float moveSpeed = 30;
+    [SerializeField] float zoomSpeed = 12;
 
     
     private Vector3 firstTouchStartPos;
@@ -114,6 +114,7 @@ public class CameraController : MonoBehaviour
             currentCameraSize = virtualCamera.m_Lens.OrthographicSize;
             targetCameraSize = Mathf.Clamp(currentCameraSize - distanceDelta * Time.deltaTime, 8, 20);
             virtualCamera.m_Lens.OrthographicSize = targetCameraSize;
+            miniMapCamera.orthographicSize = targetCameraSize;
             CheckBorders(followTarget.position);
         }
     }
@@ -141,5 +142,6 @@ public class CameraController : MonoBehaviour
         }
 
         followTarget.position = targetPos;
+        miniMapCamera.transform.position = mainCamera.transform.position;
     }
 }

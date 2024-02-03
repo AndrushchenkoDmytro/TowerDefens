@@ -19,5 +19,5 @@ MonoBehaviour:
     stone: 0
     gold: 0
   buildingSprite: {fileID: 21300000, guid: 793ca27a5a3378149aaa12abe85933f4, type: 3}
-  blockConstracionRadius: 7
+  blockConstracionRadius: 6.5
   constractionTime: 6

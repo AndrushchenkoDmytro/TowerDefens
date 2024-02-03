@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5807166928562967173}
   - component: {fileID: 3122899641801039747}
   - component: {fileID: 347943058628247635}
+  - component: {fileID: 5885710954971123666}
   m_Layer: 8
   m_Name: MainTowerDestroyerEnemy
   m_TagString: Enemy
@@ -261,6 +262,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5885710954971123666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558319436372859911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c67c66e331ccfe40ab2856b3ce808ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingLayer: 6
+  projectileLayer: 3
+  particleColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7384774284308535195
 GameObject:
   m_ObjectHideFlags: 0

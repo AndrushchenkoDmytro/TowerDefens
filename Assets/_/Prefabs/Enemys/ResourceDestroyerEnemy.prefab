@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5807166928562967173}
   - component: {fileID: 3122899641801039747}
   - component: {fileID: 347943058628247635}
+  - component: {fileID: 8144632969554505378}
   m_Layer: 8
   m_Name: ResourceDestroyerEnemy
   m_TagString: Enemy
@@ -261,6 +262,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8144632969554505378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558319436372859911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755393fd0f0d31d42923503ae3ae9032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  moveDirection: {x: 0, y: 0, z: 0}
+  moveSpeed: 9
+  damage: 20
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  buildingLayer: 6
+  projectileLayer: 3
+  particleColor: {r: 0.15686274, g: 1, b: 0.25888842, a: 1}
 --- !u!1 &7384774284308535195
 GameObject:
   m_ObjectHideFlags: 0

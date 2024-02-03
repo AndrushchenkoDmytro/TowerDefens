@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherTower : MonoBehaviour
@@ -45,8 +43,8 @@ public class ArcherTower : MonoBehaviour
         else
         {
             rechargeTime = 0;
-            GameObject projectile = Instantiate(projectilePrefab,transform.position,Quaternion.identity);
-            projectile.GetComponent<ArrowProjectile>().SetTarget(target);
+            ArrowProjectile projectile = PoolsHandler.instance.arrowProjectile.GetObjectFromPool(transform.position);
+            projectile.SetTarget(target);
         }
     }
 

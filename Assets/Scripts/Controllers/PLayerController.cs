@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +7,8 @@ public class PLayerController : MonoBehaviour
     [SerializeField] private Transform mainTower;
     public static PLayerController instance;
 
-    [SerializeField] private Transform ghost;        
+    [SerializeField] private Transform ghost;
+    private GhostBuilding ghostBuilding;
     private Camera mainCamera;
     private Vector3 moveDir;
     private Vector2 screenCenter;
@@ -46,7 +45,8 @@ public class PLayerController : MonoBehaviour
             enabled = false;
         };
         screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-
+        ghostBuilding = ghost.GetComponent<GhostBuilding>();
+        ghostBuilding.OnApplyButtonPressed += Build;
 
     }
     void Start()
@@ -54,7 +54,6 @@ public class PLayerController : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.touchCount > 0)
@@ -68,16 +67,13 @@ public class PLayerController : MonoBehaviour
                     touchWorldPos.z = 0;
                     moveDir = (ghost.position - touchWorldPos).normalized;
                     moveDir.x *= 1.4f;
-                    ghost.position -= moveDir * 15 * Time.deltaTime;
+                    ghost.position -= moveDir * 25 * Time.deltaTime;
                 }
                 if (touch.phase == TouchPhase.Ended)
                 {
                     if(isPointerOverGameobject == false)
                     {
                         SpawnBuilding();
-                        Vector3 center = mainCamera.ScreenToWorldPoint(screenCenter) + moveDir;
-                        center.z = 0;
-                        ghost.position = center;
                     }
                     isPointerOverGameobject = false;
                 }
@@ -95,12 +91,18 @@ public class PLayerController : MonoBehaviour
         {
             if (ResourceManager.Instance.CanAfford(activeBuildingType.constructPriceList))
             {
-                buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(ghost.position);
-                buildingConstruction.SetBuildingType(activeBuildingType);
-                Instantiate(particlesPrefab, ghost.position, Quaternion.identity);
-                SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
+                ghostBuilding.ShowApplyButton();
             }
         }
+    }
+
+    private void Build()
+    {
+        ResourceManager.Instance.Afford(activeBuildingType.constructPriceList);
+        buildingConstruction = PoolsHandler.instance.buildingConstructions.GetObjectFromPool(ghost.position);
+        buildingConstruction.SetBuildingType(activeBuildingType);
+        Instantiate(particlesPrefab, ghost.position, Quaternion.identity);
+        SoundManager.instance.PlaySound(SoundManager.Sound.BuildingPlaced);
     }
 
     public void SetActiveBuildingType(BuildingsTypeSo buildingsTypeSo)

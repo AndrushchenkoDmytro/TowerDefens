@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GhostBuilding : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer ghostSprite;
+    [SerializeField] private GameObject applyButton;
     private BuildingsTypeSo activeBuilding;
     private ProductionPerformanceOverlay performanceOverlay;
+    public System.Action OnApplyButtonPressed;
     void Awake()
     {
         ghostSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -48,5 +48,16 @@ public class GhostBuilding : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    public void ShowApplyButton()
+    {
+        applyButton.SetActive(true);
+    }
+
+    public void ApplyPressed()
+    {
+        OnApplyButtonPressed?.Invoke();
+        applyButton.SetActive(false);
     }
 }

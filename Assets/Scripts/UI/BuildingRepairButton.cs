@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -26,6 +24,7 @@ public class BuildingRepairButton : MonoBehaviour, IPointerEnterHandler, IPointe
         GetComponentInChildren<Button>().onClick.AddListener(() => {
             if (ResourceManager.Instance.CanAfford(repairPricesList))
             {
+                ResourceManager.Instance.Afford(repairPricesList);
                 healthSystem.GetHeal(200);
                 priceToolTip.SetActive(false);
                 transform.parent.gameObject.SetActive(false);

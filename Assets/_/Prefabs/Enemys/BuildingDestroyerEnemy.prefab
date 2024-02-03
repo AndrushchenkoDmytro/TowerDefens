@@ -276,12 +276,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
-  buildingLayerMask:
+  isBuildingsMainTarger: 1
+  targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
   buildingLayer: 6
   projectileLayer: 3
-  particleSystem: {fileID: 0}
   particleColor: {r: 0.15686275, g: 0.27058825, b: 1, a: 1}
 --- !u!1 &7384774284308535195
 GameObject:
