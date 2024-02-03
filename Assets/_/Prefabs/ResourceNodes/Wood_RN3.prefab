@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1812723293203590181
 Transform:
@@ -110,12 +110,12 @@ GameObject:
   - component: {fileID: 981899965349470445}
   - component: {fileID: 8769235629963537259}
   - component: {fileID: 6911432105361142986}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &981899965349470445
 Transform:
@@ -173,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 36717b820f0a83942a04e47e1269f7ed, type: 3}
+  m_Sprite: {fileID: 519976147, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.79607844}
   m_FlipX: 0
   m_FlipY: 0
@@ -209,12 +209,12 @@ GameObject:
   - component: {fileID: 7078524328777130176}
   - component: {fileID: 3242478373937515198}
   - component: {fileID: 6044307582207602941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7078524328777130176
 Transform:
@@ -272,7 +272,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 5601c8d680f777a4a9a575d5e747d05d, type: 3}
+  m_Sprite: {fileID: 1186021001, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.94509804}
   m_FlipX: 1
   m_FlipY: 1
@@ -308,12 +308,12 @@ GameObject:
   - component: {fileID: 8857899813902271900}
   - component: {fileID: 1541998179094752269}
   - component: {fileID: 3114868985310757105}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8857899813902271900
 Transform:
@@ -371,7 +371,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 77653622e4e5c0d48bb4a39f6b385a98, type: 3}
+  m_Sprite: {fileID: -479213242, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -411,7 +411,7 @@ GameObject:
   m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1047655970156508540
 Transform:
@@ -490,12 +490,12 @@ GameObject:
   - component: {fileID: 4484717061658226118}
   - component: {fileID: 4439327496876468952}
   - component: {fileID: 8927110439629410852}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeTrunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4484717061658226118
 Transform:
@@ -588,12 +588,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7543509033978077614}
   - component: {fileID: 8245337537266640923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CircleLarge_Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7543509033978077614
 Transform:

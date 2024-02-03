@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.U2D;
 
-public class ArrowProjectile : MonoBehaviour
+public class ArrowProjectile : MonoBehaviour, IPoolable
 {
     private Transform sprite;
     [SerializeField] private Transform target;
@@ -13,9 +11,12 @@ public class ArrowProjectile : MonoBehaviour
     [SerializeField] private float lifeTime = 2;
     private float rotateTime = 0.1f;
     private float rotateInterval = 0.1f;
-    [SerializeField] private LayerMask projectileLayer;
+    [SerializeField] private LayerMask enemyLayer;
 
     private bool isTargetActive = true;
+
+    public event Action<IPoolable> OnPolableDestroy;
+
     private void Start()
     {
         sprite = transform.GetChild(0).transform;
@@ -56,8 +57,12 @@ public class ArrowProjectile : MonoBehaviour
         }
         else
         {
+            
             rotateTime = 0;
-            sprite.eulerAngles = new Vector3(0,0,UtilsClass.GetAngleFromVector(moveDirection));
+            if (isTargetActive)
+            {
+                sprite.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(moveDirection));
+            }
         }
     }
 
@@ -69,15 +74,25 @@ public class ArrowProjectile : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            OnPolableDestroy?.Invoke(this);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == projectileLayer)
+        if (collision.gameObject.layer == 8)
         {
-            Destroy(gameObject);
+            OnPolableDestroy?.Invoke(this);
         }
+    }
+
+    public void Reset()
+    {
+        target = null;
+        rotateTime = rotateInterval;
+        time = 0;
+        moveDirection = Vector3.zero;
+        isTargetActive = true;
+        gameObject.SetActive(false);
     }
 }

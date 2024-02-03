@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +7,6 @@ public class OptionsMenu : MonoBehaviour
     private GameObject optionsButton;
     private GameObject optionMenuContainer;
     private Transform gameUI;
-
-    private void Update()
-    {
-        Debug.Log(Time.timeScale);
-    }
 
     private void Awake()
     {

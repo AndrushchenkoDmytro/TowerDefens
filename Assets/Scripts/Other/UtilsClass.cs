@@ -1,22 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class UtilsClass {
-
-    private static Camera mainCamera;
-
-    static UtilsClass()
-    {
-        mainCamera = Camera.main;
-    }
-
-    public static Vector3 GetMouseWorldPosition() {
-        //if (mainCamera == null) mainCamera = Camera.main;
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0f;
-        return mouseWorldPosition;
-    }
 
     public static Vector3 GetRandomDir() 
     {

@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuildingIconSelecter : MonoBehaviour
+public class BuildingIconSelecter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private ExpandableButton expandButton;
     private RectTransform rectTransform;
@@ -18,6 +17,7 @@ public class BuildingIconSelecter : MonoBehaviour
     private Button selectTypeButton;
     [SerializeField] private RectTransform selectionImage;
     [SerializeField] BuildingsTypeSo selectType;
+    [SerializeField] private GameObject priceToolTip;
    
 
     private void Awake()
@@ -27,13 +27,14 @@ public class BuildingIconSelecter : MonoBehaviour
         GameObject.Find("MainTower").GetComponent<MainTower>().OnGameOver += () => { selectTypeButton.enabled = false; };
         //iconOriginalSize = new Vector2(rectTransform.rect.width, rectTransform.rect.height);
         distance = (iconOriginalSize.x + offset) * iconIndex;
+        priceToolTip.SetActive(false);
     }
     private void Start()
     {
         selectTypeButton.onClick.AddListener(() => {
-            if(PLayerController.Instance.activeBuildingType == selectType)
+            if(PLayerController.instance.activeBuildingType == selectType)
             {
-                PLayerController.Instance.SetActiveBuildingType(null);
+                PLayerController.instance.SetActiveBuildingType(null);
                 selectionImage.gameObject.SetActive(false);
             }
             else
@@ -49,7 +50,7 @@ public class BuildingIconSelecter : MonoBehaviour
                     selectionImage.transform.SetSiblingIndex(0);
                     selectionImage.transform.localPosition = new Vector3(0, 0, 0);
                 }
-                PLayerController.Instance.SetActiveBuildingType(selectType);
+                PLayerController.instance.SetActiveBuildingType(selectType);
             }            
         });
     }
@@ -131,5 +132,15 @@ public class BuildingIconSelecter : MonoBehaviour
         selectTypeButton.interactable = true;
         expandButton.RepairButton();
         yield return null;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        priceToolTip.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        priceToolTip.SetActive(false);
     }
 }

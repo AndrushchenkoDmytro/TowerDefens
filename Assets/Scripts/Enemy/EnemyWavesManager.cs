@@ -1,5 +1,3 @@
-
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,24 +10,24 @@ public class EnemyWavesManager : MonoBehaviour
         WaitingForWaveEnd
     }
     private State currentState = State.SwitchState;
-
-    
+   
     [SerializeField] private Transform spawnZone;
-    [SerializeField] private List<Transform> spawnPositions;
+    private List<int> spawnPoints;
+    private float offset;
     private Vector3 randomOffset = Vector3.zero;
     int posIndex = 0;
 
     private int waveIndex = 0;
     public float nextWaveTimer { get; private set; } 
-    private float timeBetweenWaves = 10;
+    private float timeBetweenWaves = 12;
 
-    private float timeBetweenEnemys = 0.2f;
+    private float timeBetweenEnemys = 0.25f;
     private float nextEnemyTimer = 0;
 
     private float switchStateTime = 7;
     private float switchTimer = 1;
 
-    private int enemysInWave = 10;
+    private int enemysInWave = 1;
     private int enemysRemain;
 
     public System.Action<int> OnEnemyWaveIncrease;
@@ -70,8 +68,32 @@ public class EnemyWavesManager : MonoBehaviour
                 }
                 else
                 {
-                    randomOffset = new Vector3(Random.Range(-7f, 7f), Random.Range(-7f, 7f), 0);
-                    PoolsHandler.instance.buildingDestroyers.GetObjectFromPool(spawnPositions[posIndex].position + randomOffset);
+                    randomOffset = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+                    if(waveIndex < 25)
+                    {
+                        if(Random.Range(1,20f) < 14) 
+                            PoolsHandler.instance.buildingDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                        else
+                            PoolsHandler.instance.resourceDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                    }
+                    else if(waveIndex < 50)
+                    {
+                        if (Random.Range(1, 40f) < 20)
+                            PoolsHandler.instance.buildingDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                        else if(Random.Range(1, 40f) < 32)
+                            PoolsHandler.instance.resourceDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                        else 
+                            PoolsHandler.instance.mainTowerDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                    }
+                    else
+                    {
+                        if (Random.Range(1, 60f) < 15)
+                            PoolsHandler.instance.mainTowerDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                        else if (Random.Range(1, 60f) < 50)
+                            PoolsHandler.instance.resourceDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                        else
+                            PoolsHandler.instance.mainTowerDestroyers.GetObjectFromPool(spawnZone.position + randomOffset);
+                    }
                     enemysRemain--;
                     nextEnemyTimer = 0;
                 }
@@ -108,8 +130,11 @@ public class EnemyWavesManager : MonoBehaviour
 
     private void GenerateWavePosition()
     {
-        posIndex = Random.Range(0, spawnPositions.Count);
-        spawnZone.position = spawnPositions[posIndex].position;
+
+        posIndex = Random.Range(0, spawnPoints.Count);
+        if (posIndex % 2 != 0 && posIndex != spawnPoints.Count) posIndex++;
+        Mathf.Clamp(posIndex,0, spawnPoints.Count-1);
+        spawnZone.position = new Vector3(spawnPoints[posIndex]*offset, spawnPoints[posIndex + 1]*offset, 0);
     }
 
     public Vector3 GetWaveSpawnPosition()
@@ -120,5 +145,22 @@ public class EnemyWavesManager : MonoBehaviour
     public int GetWaveIndex()
     {
         return waveIndex;
+    }
+
+    public void SetSpawnPoints(ref int[,] points, int offset)
+    {
+        this.offset = offset;
+        spawnPoints = new List<int>();
+        for (int i = 3; i < 10; i++)
+        {
+            for (int j = 3; j < 10; j++)
+            {
+                if (points[i, j] == 0)
+                {
+                    spawnPoints.Add(i-6);
+                    spawnPoints.Add(j-6);
+                }
+            }
+        }
     }
 }

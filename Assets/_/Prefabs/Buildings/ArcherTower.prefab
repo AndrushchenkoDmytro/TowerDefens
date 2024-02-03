@@ -594,6 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAmountMax: 100
+  destroyParticles: {fileID: 7186901638340864668, guid: 5731055b57af76744aa0f260d9e0e788, type: 3}
   canBeRecover: 1
   time: 0
 --- !u!114 &8193079322147221792
@@ -623,7 +624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4321222406742190971, guid: c5fd6d9d388147e429569bb8b7d13c7e, type: 3}
   target: {fileID: 0}
-  rechargeInterval: 0.4
+  rechargeInterval: 0.35
   atackRadius: 16
   enemyLayer:
     serializedVersion: 2
@@ -1148,6 +1149,10 @@ PrefabInstance:
       propertyPath: healthSystem
       value: 
       objectReference: {fileID: 8422395236718813287}
+    - target: {fileID: 653049708062972280, guid: addf18bc52845894790b677258a14ee9, type: 3}
+      propertyPath: fullRepairCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3906653673036445164, guid: addf18bc52845894790b677258a14ee9, type: 3}
       propertyPath: m_Name
       value: RepairOverlay

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 8754044601795075827}
   - component: {fileID: 6711731932470150452}
   - component: {fileID: 4429717870671404580}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8754044601795075827
 Transform:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 77653622e4e5c0d48bb4a39f6b385a98, type: 3}
+  m_Sprite: {fileID: -479213242, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -110,12 +110,12 @@ GameObject:
   - component: {fileID: 650681668157464433}
   - component: {fileID: 5410004982785759856}
   - component: {fileID: 7265714228281066136}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &650681668157464433
 Transform:
@@ -125,13 +125,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2764717576691892011}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.14547868, w: 0.9893614}
   m_LocalPosition: {x: -0.69, y: 0.805, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8606530251730053324}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.73}
 --- !u!212 &5410004982785759856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d5992f8c95721384ba65df7f379dd3de, type: 3}
+  m_Sprite: {fileID: -1526513802, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -209,12 +209,12 @@ GameObject:
   - component: {fileID: 5999547322337209849}
   - component: {fileID: 994270121591486935}
   - component: {fileID: 4599065976803864628}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5999547322337209849
 Transform:
@@ -272,7 +272,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 36717b820f0a83942a04e47e1269f7ed, type: 3}
+  m_Sprite: {fileID: 519976147, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -312,7 +312,7 @@ GameObject:
   m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8606530251730053324
 Transform:
@@ -391,12 +391,12 @@ GameObject:
   - component: {fileID: 5929729687642534070}
   - component: {fileID: 2719051958600342935}
   - component: {fileID: 7633622191625516900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeTrunck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5929729687642534070
 Transform:
@@ -495,7 +495,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7659493171329245261
 Transform:
@@ -589,12 +589,12 @@ GameObject:
   - component: {fileID: 16082664473600820}
   - component: {fileID: 5408033420373630358}
   - component: {fileID: 5050081712062467433}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeBushes_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &16082664473600820
 Transform:
@@ -652,7 +652,7 @@ SpriteRenderer:
   m_SortingLayerID: -909903199
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5601c8d680f777a4a9a575d5e747d05d, type: 3}
+  m_Sprite: {fileID: 1186021001, guid: e068c5ed909cadd49b7fce6a4dd74d79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -206,6 +206,6 @@ MonoBehaviour:
   target: {fileID: 0}
   moveDirection: {x: 0, y: 0, z: 0}
   lifeTime: 2
-  projectileLayer:
+  enemyLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
